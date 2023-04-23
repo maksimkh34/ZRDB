@@ -7,8 +7,29 @@
         mc:Ignorable="d"
         Closed="Window_Closed"
         ResizeMode="NoResize"
-        Title="Main" Height="450" Width="800">
+        WindowStartupLocation="CenterScreen"
+        Title="Меню" Height="368" Width="260">
     <Grid>
-        
+        <StackPanel Margin="5">
+            <GroupBox Header="Справочники">
+                <StackPanel>
+                    <Button Click="EIButton_C" Height="24" Margin="5">Учреждения образования</Button>
+                    <Button Click="KidsButton_C" Height="24" Margin="5,0,5,0">Воспитанники</Button>
+                    <Button Click="GroupsButton_C" Height="24" Margin="5">Отряды</Button>
+                    <Button Click="PassportButton_C" Height="24" Margin="5,0,5,5">Социально-педагогический паспорт</Button>
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox Header="Пользователи">
+                <StackPanel>
+                    <Button Click="AddUserButton_C" Height="24" Margin="5">Добавить пользователя</Button>
+                    <Button Click="ChangePasswordButton_C" Height="24" Margin="5,0,5,0">Сменить пароль</Button>
+                    <Button Click="DeleteUserButton_C" Height="24" Margin="5">Удалить пользователя</Button>
+                    <Button Click="UsersListButton_C" Height="24" Margin="5,0,5,5">Список пользователей</Button>
+                </StackPanel>
+            </GroupBox>
+
+            <Button Click="HelpButton_C" Margin="10,3,10,3">Помощь</Button>
+        </StackPanel>
     </Grid>
 </Window>

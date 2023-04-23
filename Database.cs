@@ -47,7 +47,7 @@ namespace Database_nsp
 
     public class Database
     {
-        const bool isAuthSkipAvalibvale = false;
+        const bool isAuthSkipAvalibvale = true;
         SQLiteConnection db;
         string DBpassword;
 

@@ -3,9 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
+using System.ServiceModel.Channels;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Windows;
 
 namespace ZRDB
 {
@@ -34,8 +35,11 @@ namespace ZRDB
                 return new string[] { s1, s2 };
             } catch 
             {
-                return new string[] { "Dyv9Tk\"", "w7;g`5N1n" };
+                MessageBox.Show("Ошибка открытия реестра. ", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                Environment.Exit(-1);
+                return new string[0];
             }
+            
         }
 
         public static bool isAdminRights()
