@@ -25,6 +25,13 @@ namespace Database_nsp
         ConnectionError
     }
 
+    public enum AddUserResult
+    {
+        Success,
+        DatabaseError,
+        AlreadyExists
+    }
+
     class User
     {
         public string Passhash { get; set; }
@@ -50,6 +57,21 @@ namespace Database_nsp
         const bool isAuthSkipAvalibvale = true;
         SQLiteConnection db;
         string DBpassword;
+
+        private string GetHash(string text)
+        {
+            StringBuilder sb = new StringBuilder();
+            using (MD5 md5 = MD5.Create())
+            {
+                byte[] hashValue = md5.ComputeHash(Encoding.UTF8.GetBytes(text.ToCharArray()));
+
+                foreach (byte b in hashValue)
+                {
+                    sb.Append($"{b:X2}");
+                }
+            }
+            return sb.ToString();
+        }
 
         string getDefaultDBPath()
         {
@@ -89,17 +111,7 @@ namespace Database_nsp
                 return LoginResult.InvalidMethod;
             }
 
-            StringBuilder sb = new StringBuilder();
-            using (MD5 md5 = MD5.Create())
-            {
-                byte[] hashValue = md5.ComputeHash(Encoding.UTF8.GetBytes(password.ToCharArray()));
-
-                foreach (byte b in hashValue)
-                {
-                    sb.Append($"{b:X2}");
-                }
-            }
-            password = sb.ToString();
+            password = GetHash(password);
 
             User checkingUser = new User();
             checkingUser.Username = login;
@@ -123,6 +135,29 @@ namespace Database_nsp
                 }
             }
             return LoginResult.InvalidLogin;
+        }
+
+        public AddUserResult AddUser(string login, string password)
+        {
+            List<User> users = db.Query<User>("SELECT * FROM User WHERE Username=\"" + login + "\"");
+            if(users.Count != 0) 
+            {
+                return AddUserResult.AlreadyExists;
+            }
+            password = GetHash(password);
+
+            User addingUser = new User();
+            addingUser.Username = login;
+            addingUser.Passhash = password;
+
+            try 
+            {
+                db.Insert(addingUser);
+            } catch
+            {
+                return AddUserResult.DatabaseError;
+            }
+            return AddUserResult.Success;
         }
     }
 }
