@@ -24,12 +24,18 @@ namespace ZRDB
 
         public static string[] getPasswords()
         {
-            RegistryKey lkey = Registry.LocalMachine;
-            RegistryKey nkey = lkey.OpenSubKey("SOFTWARE", true);
-            RegistryKey pass = nkey.OpenSubKey("ZRDB");
-            string s1 = pass.GetValue("p1").ToString();
-            string s2 = pass.GetValue("p2").ToString();
-            return new string[] { s1, s2 };
+            try
+            {
+                RegistryKey lkey = Registry.LocalMachine;
+                RegistryKey nkey = lkey.OpenSubKey("SOFTWARE", true);
+                RegistryKey pass = nkey.OpenSubKey("ZRDB");
+                string s1 = pass.GetValue("p1").ToString();
+                string s2 = pass.GetValue("p2").ToString();
+                return new string[] { s1, s2 };
+            } catch 
+            {
+                return new string[] { "Dyv9Tk\"", "w7;g`5N1n" };
+            }
         }
 
         public static bool isAdminRights()

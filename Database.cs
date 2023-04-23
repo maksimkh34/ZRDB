@@ -27,8 +27,22 @@ namespace Database_nsp
 
     class User
     {
-        public string Passhash;
-        public string Username;
+        public string Passhash { get; set; }
+        public string Username { get; set; }
+    }
+
+    class School
+    {
+        public string name { get; set; }
+        public string subordination { get; set; }
+        public string management { get; set; }
+        public string form { get; set; }
+        public string supervisor { get; set; }
+        public string mail { get; set; }
+        public string site { get; set; }
+        public string PAN { get; set; }
+        public string contacts { get; set; }
+        public string address { get; set; }
     }
 
     public class Database
@@ -36,6 +50,11 @@ namespace Database_nsp
         const bool isAuthSkipAvalibvale = false;
         SQLiteConnection db;
         string DBpassword;
+
+        string getDefaultDBPath()
+        {
+            return "D:\\ZRDB\\";
+        }
 
         public Database()
         {
@@ -47,7 +66,7 @@ namespace Database_nsp
         {
             try
             {
-                var options = new SQLiteConnectionString("data.zb", true,
+                var options = new SQLiteConnectionString(getDefaultDBPath() + "data.zb", true,
                     key: DBpassword);
                 db = new SQLiteConnection(options);
                 return DatabaseResult.Success;
@@ -86,7 +105,7 @@ namespace Database_nsp
             checkingUser.Username = login;
             checkingUser.Passhash = password;
 
-            List<User> Users = db.Query<User>("SELECT * FROM Users");
+            List<User> Users = db.Query<User>("SELECT * FROM User");
 
             foreach(User user_f in Users)
             {

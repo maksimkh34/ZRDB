@@ -11,6 +11,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>icon.ico</ApplicationIcon>
+    <BaseOutputPath>D:\ZRDB</BaseOutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Resource Include="icon.ico" />
