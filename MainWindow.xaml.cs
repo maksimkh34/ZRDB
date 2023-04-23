@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Database_nsp;
 
 namespace ZRDB
 {
@@ -28,6 +29,21 @@ namespace ZRDB
 
         private void LoginButton_C(object sender, RoutedEventArgs e)
         {
+            Database main = new Database();
+            LoginResult res = main.TryLogin(login_tb.Text, password_tb.Password);
+            switch (res)
+            {
+                case LoginResult.Success:
+                    break;
+                case LoginResult.InvalidPassword:
+                    break;
+                case LoginResult.InvalidLogin:
+                    break;
+                case LoginResult.ConnectionError: 
+                    break;
+                case LoginResult.InvalidMethod:
+                    break;
+            }
 
         }
     }

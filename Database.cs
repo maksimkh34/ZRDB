@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using ZRDB;
 
-namespace Database
-{ 
-    enum LoginResult
+namespace Database_nsp
+{
+    public enum LoginResult
     {
         Success,
         InvalidPassword,
@@ -19,7 +19,7 @@ namespace Database
         InvalidMethod
     }
 
-    enum DatabaseResult
+    public enum DatabaseResult
     {
         Success,
         ConnectionError
@@ -31,13 +31,13 @@ namespace Database
         public string Username;
     }
 
-    class Database
+    public class Database
     {
         const bool isAuthSkipAvalibvale = false;
         SQLiteConnection db;
         string DBpassword;
 
-        Database()
+        public Database()
         {
             string[] EncryptedPassword = DBEncryption.getPasswords();
             DBpassword = DBEncryption.compileKeyPass(EncryptedPassword, DBEncryption.getKey(EncryptedPassword));
