@@ -68,7 +68,7 @@ namespace ZRDB
             {
                 MessageBoxInterface.ShowError("Ошибка подключения к базе данных. ");
             }
-            DefaultResult res = db.changePassword(password);
+            DefaultResult res = db.ChangePassword(password);
             switch (res)
             {
                 case DefaultResult.Success:

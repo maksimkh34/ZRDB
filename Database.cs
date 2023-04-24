@@ -47,6 +47,18 @@ namespace Database_nsp
         removingLastUser
     }
 
+    public class Userlist
+    {
+        public int number;
+        public string name;
+
+        public Userlist(int num, string name)
+        {
+            number = num;
+            this.name = name;
+        }
+    }
+
     class User
     {
         public string Passhash { get; set; }
@@ -204,7 +216,7 @@ namespace Database_nsp
 
         }
 
-        public DefaultResult changePassword(string password)
+        public DefaultResult ChangePassword(string password)
         {
             password = GetHash(password);
             try
@@ -215,6 +227,17 @@ namespace Database_nsp
             {
                 return DefaultResult.DatabaseError;
             }
+        }
+
+        public List<Userlist> GetUsers()
+        {
+            List<Userlist> users = new List<Userlist>();
+            List<User> users_class = db.Query<User>("SELECT * FROM User");
+            for(int i = 0; i < users_class.Count; i++) 
+            {
+                users.Add(new Userlist(i+1, users_class[i].Username));
+            }
+            return users;
         }
     }
 }

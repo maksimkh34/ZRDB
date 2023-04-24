@@ -136,7 +136,8 @@ namespace ZRDB
 
         private void UsersListButton_C(object sender, EventArgs e)
         {
-
+            UsersList form = new UsersList();
+            form.ShowDialog();
         }
 
         // Help

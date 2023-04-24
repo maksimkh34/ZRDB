@@ -11,6 +11,9 @@
     <Compile Update="Main.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="UsersList.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="AddUser.xaml">
@@ -20,6 +23,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Main.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UsersList.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
