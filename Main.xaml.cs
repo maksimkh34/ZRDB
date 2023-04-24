@@ -55,7 +55,9 @@ namespace ZRDB
 
         private void AddUserButton_C(object sender, EventArgs e)
         {
-
+            AddUser form = new AddUser();
+            Hide();
+            form.ShowDialog();
         }
 
         private void ChangePasswordButton_C(object sender, EventArgs e)

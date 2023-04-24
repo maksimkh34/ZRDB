@@ -21,6 +21,7 @@ namespace ZRDB
     /// </summary>
     public partial class MainWindow : Window
     {
+        public Database main = new Database();
         public MainWindow()
         {
             if (!DBEncryption.isAdminRights())
@@ -35,7 +36,7 @@ namespace ZRDB
 
         private void LoginButton_C(object sender, RoutedEventArgs e)
         {
-            Database main = new Database();
+            
             main.Connect();
             LoginResult res = main.TryLogin(login_tb.Text, password_tb.Password);
             switch (res)
