@@ -49,14 +49,8 @@ namespace Database_nsp
 
     public class Userlist
     {
-        public int number;
-        public string name;
-
-        public Userlist(int num, string name)
-        {
-            number = num;
-            this.name = name;
-        }
+        public int number { get; set; }
+        public string name { get; set; }
     }
 
     class User
@@ -235,7 +229,10 @@ namespace Database_nsp
             List<User> users_class = db.Query<User>("SELECT * FROM User");
             for(int i = 0; i < users_class.Count; i++) 
             {
-                users.Add(new Userlist(i+1, users_class[i].Username));
+                Userlist userlist = new Userlist();
+                userlist.number = i + 1;
+                userlist.name = users_class[i].Username;
+                users.Add(userlist);
             }
             return users;
         }

@@ -16,7 +16,7 @@
                     <Button Click="EIButton_C" Height="24" Margin="5">Учреждения образования</Button>
                     <Button Click="KidsButton_C" Height="24" Margin="5,0,5,0">Воспитанники</Button>
                     <Button Click="GroupsButton_C" Height="24" Margin="5">Отряды</Button>
-                    <Button Click="PassportButton_C" Height="24" Margin="5,0,5,5">Социально-педагогический паспорт</Button>
+                    <Button Click="PassportButton_C" Width="220" Height="24" Margin="5,0,5,5">Социально-педагогический паспорт</Button>
                 </StackPanel>
             </GroupBox>
 
@@ -30,6 +30,7 @@
             </GroupBox>
 
             <Button Click="HelpButton_C" Margin="10,3,10,3">Помощь</Button>
+            <Button Click="Window_Closed" Margin="10,3,10,3">Выход</Button>
         </StackPanel>
     </Grid>
 </Window>

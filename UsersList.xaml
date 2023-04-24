@@ -9,12 +9,8 @@
         Title="Список пользователей" SizeToContent="WidthAndHeight">
     <Grid>
         <TextBlock FontWeight="SemiBold" Margin="5">Список пользователей: </TextBlock>
-        <DataGrid AutoGenerateColumns = "False" Name="main_dg" Margin="5,25,5,5" CanUserAddRows="False" CanUserDeleteRows="False"
+        <DataGrid Name="main_dg" Margin="5,25,5,5" CanUserAddRows="False" CanUserDeleteRows="False" Loaded="main_dg_Loaded"
                   HorizontalAlignment="Stretch">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header = "№п/п" Width="Auto"/>
-                <DataGridTextColumn Header = "Имя" Width="Auto"/>
-            </DataGrid.Columns>
         </DataGrid>
     </Grid>
 </Window>

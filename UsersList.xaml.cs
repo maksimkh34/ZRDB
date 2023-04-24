@@ -31,8 +31,13 @@ namespace ZRDB
                 MessageBoxInterface.ShowError("Ошибка подключения к базе данных. ");
             }
 
-            List<Userlist> list = db.GetUsers();
-            main_dg.Items.Add(list[0]);
+            main_dg.ItemsSource = db.GetUsers();
+        }
+
+        private void main_dg_Loaded(object sender, RoutedEventArgs e)
+        {
+            main_dg.Columns[0].Header = "№п/п";
+            main_dg.Columns[1].Header = "Имя пользователя";
         }
     }
 }
