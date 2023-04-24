@@ -8,7 +8,7 @@
         Closed="Window_Closed"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
-        Title="Меню" Height="368" Width="260">
+        Title="Меню" SizeToContent="WidthAndHeight">
     <Grid>
         <StackPanel Margin="5">
             <GroupBox Header="Справочники">

@@ -8,10 +8,10 @@
         ResizeMode="NoResize"
         Closed="Window_Closed"
         WindowStartupLocation="CenterScreen"
-        Title="Добавление пользователя" Height="172" Width="300">
+        Title="Добавление пользователя" SizeToContent="WidthAndHeight">
     <Grid>
         <StackPanel>
-            <TextBlock Margin="5,2,0,0" FontWeight="SemiBold" HorizontalAlignment="Center">Добавление нового пользователя</TextBlock>
+            <TextBlock Margin="5" FontWeight="SemiBold" HorizontalAlignment="Center">Добавление нового пользователя</TextBlock>
             <TextBlock Margin="5">Логин (имя пользователя):</TextBlock>
             <TextBox x:Name="login_tb" Margin="5,-3,5,0"></TextBox>
             <TextBlock Margin="5">Пароль:</TextBlock>

@@ -32,6 +32,14 @@ namespace Database_nsp
         AlreadyExists
     }
 
+    public enum RemoveUserResult
+    {
+        Success,
+        DatabaseError,
+        UserNotFound,
+        removingLastUser
+    }
+
     class User
     {
         public string Passhash { get; set; }
@@ -104,6 +112,7 @@ namespace Database_nsp
         {
             if (isAuthSkipAvalibvale && login == "" && password == "")
             {
+                Application.Current.Properties.Add("CurrentUserName", "$$SKIPPEDLOGIN$$");
                 return LoginResult.Success;
             }
             else if (!isAuthSkipAvalibvale && login == "" && password == "") 
@@ -158,6 +167,34 @@ namespace Database_nsp
                 return AddUserResult.DatabaseError;
             }
             return AddUserResult.Success;
+        }
+
+        public RemoveUserResult RemoveUser(bool forceRemoving = false)
+        {
+            List<User> allUsers = db.Query<User>("SELECT * FROM User;");
+            if (allUsers.Count == 1 && !forceRemoving)
+            {
+                return RemoveUserResult.removingLastUser;
+            }
+
+            List<User> list = db.Query<User>("SELECT * FROM User WHERE Username=\"" + Application.Current.Properties["CurrentUserName"] +"\";");
+            if(list.Count != 0)
+            {
+                try
+                {
+                    db.Execute("DELETE FROM User WHERE Username=\"" + Application.Current.Properties["CurrentUserName"] + "\";");
+                    return RemoveUserResult.Success;
+                }
+                catch
+                {
+                    return RemoveUserResult.DatabaseError;
+                }
+            }
+            else
+            {
+                return RemoveUserResult.UserNotFound;
+            }
+
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Database_nsp;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -67,7 +68,70 @@ namespace ZRDB
 
         private void DeleteUserButton_C(object sender, EventArgs e)
         {
-
+            if (Application.Current.Properties["CurrentUserName"].ToString() == "$$SKIPPEDLOGIN$$")
+            {
+                MessageBoxInterface.ShowError("В систему был произведен вход без имени пользователя. Удаление невозможно", false);
+                return;
+            }
+            string text = "Вы точно хотите удалить пользователя " + Application.Current.Properties["CurrentUserName"] + "?";
+            MessageBoxResult res = MessageBox.Show(text, "Вопрос", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
+            switch (res)
+            {
+                case MessageBoxResult.Yes:
+                    Database db = new Database();
+                    DatabaseResult resultConnect= db.Connect();
+                    switch(resultConnect)
+                    {
+                        case DatabaseResult.Success:
+                            RemoveUserResult removeResult = db.RemoveUser();
+                            switch (removeResult)
+                            {
+                                case RemoveUserResult.Success:
+                                    MessageBoxInterface.ShowDone("Пользователь удален. Сейчас вам придется перезайти в программу с именем другого пользователя. ");
+                                    Environment.Exit(-1);
+                                    break;
+                                case RemoveUserResult.DatabaseError:
+                                    MessageBoxInterface.ShowError(isExit: true);
+                                    break;
+                                case RemoveUserResult.UserNotFound:
+                                    MessageBoxInterface.ShowError(message: "Пользователь не найден.", false);
+                                    break;
+                                case RemoveUserResult.removingLastUser:
+                                    MessageBoxResult isRemovingLastUser = MessageBox.Show("Внимание! Вы пытаетесь удалить последнего пользователя в списке. " +
+                                        "Если список будет пуст, то после перезапуска программы получить доступ к базе данных будет невозможно. Вы точно хотите удалить этого пользователя?",
+                                        "Внимание!", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No);
+                                    switch(isRemovingLastUser)
+                                    {
+                                        case MessageBoxResult.Yes:
+                                            RemoveUserResult forceRemoveResult = db.RemoveUser(true);
+                                            switch (forceRemoveResult)
+                                            {
+                                                case RemoveUserResult.Success:
+                                                    MessageBoxInterface.ShowDone("Пользователь удален. Сейчас вы можете добавить другого пользователя, чтобы позже иметь возможность запустить программу.");
+                                                    Application.Current.Properties["CurrentUserName"] = "$$DELETED$$";
+                                                    break;
+                                                case RemoveUserResult.DatabaseError:
+                                                    MessageBoxInterface.ShowError(isExit: true);
+                                                    break;
+                                                case RemoveUserResult.UserNotFound:
+                                                    MessageBoxInterface.ShowError(message: "Пользователь не найден.", false);
+                                                    break;
+                                            }
+                                            break; 
+                                        case MessageBoxResult.No: 
+                                            break;
+                                    }
+                                    break;
+                            }
+                            break;
+                        case DatabaseResult.ConnectionError:
+                            MessageBoxInterface.ShowError(isExit:true);
+                            break;
+                    }
+                    break;
+                case MessageBoxResult.No:
+                    break;
+            }
         }
 
         private void UsersListButton_C(object sender, EventArgs e)

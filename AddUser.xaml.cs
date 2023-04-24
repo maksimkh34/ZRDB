@@ -42,6 +42,12 @@ namespace ZRDB
             string login = login_tb.Text;
             string password = password_tb.Password;
 
+            if (login[0] == '$' && login[1] == '$')
+            {
+                MessageBoxInterface.ShowError("Данные имена пользователя невозможно занять. ");
+                return;
+            }
+
             AddUserResult res = db.AddUser(login, password);
             switch(res)
             {

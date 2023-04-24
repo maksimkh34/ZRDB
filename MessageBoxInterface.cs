@@ -9,7 +9,7 @@ namespace ZRDB
 {
     internal static class MessageBoxInterface
     {
-        public static void ShowError(string message, bool isExit = true) 
+        public static void ShowError(string message = "Ошибка подключения к базе данных", bool isExit = true) 
         {
             MessageBox.Show(message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             if(isExit) { Environment.Exit(-1); }
