@@ -19,6 +19,13 @@ namespace Database_nsp
         InvalidMethod
     }
 
+    public enum DefaultResult
+    {
+        Success,
+        DatabaseError,
+        VariableError
+    }
+
     public enum DatabaseResult
     {
         Success,
@@ -195,6 +202,19 @@ namespace Database_nsp
                 return RemoveUserResult.UserNotFound;
             }
 
+        }
+
+        public DefaultResult changePassword(string password)
+        {
+            password = GetHash(password);
+            try
+            {
+                db.Execute("UPDATE User SET Passhash=\"" + password + "\" WHERE Username=\"" + Application.Current.Properties["CurrentUserName"] + "\";");
+                return DefaultResult.Success;
+            } catch
+            {
+                return DefaultResult.DatabaseError;
+            }
         }
     }
 }

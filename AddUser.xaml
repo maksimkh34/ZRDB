@@ -6,7 +6,6 @@
         xmlns:local="clr-namespace:ZRDB"
         mc:Ignorable="d"
         ResizeMode="NoResize"
-        Closed="Window_Closed"
         WindowStartupLocation="CenterScreen"
         Title="Добавление пользователя" SizeToContent="WidthAndHeight">
     <Grid>

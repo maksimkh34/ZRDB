@@ -5,12 +5,18 @@
     <Compile Update="AddUser.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="ChangePassword.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Main.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="AddUser.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="ChangePassword.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Main.xaml">

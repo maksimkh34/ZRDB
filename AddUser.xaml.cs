@@ -33,10 +33,9 @@ namespace ZRDB
         private void AddUserButton_C(object sender, RoutedEventArgs e)
         {
             Database db = new Database();
-            if(db.Connect() == DatabaseResult.ConnectionError)
+            if (db.Connect() == DatabaseResult.ConnectionError)
             {
-                MessageBox.Show("Ошибка подключения к базе данных. ", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                Environment.Exit(-1);
+                MessageBoxInterface.ShowError("Ошибка подключения к базе данных. ");
             }
 
             string login = login_tb.Text;
@@ -45,22 +44,23 @@ namespace ZRDB
             if (login[0] == '$' && login[1] == '$')
             {
                 MessageBoxInterface.ShowError("Данные имена пользователя невозможно занять. ");
-                return;
             }
-
-            AddUserResult res = db.AddUser(login, password);
-            switch(res)
+            else
             {
-                case AddUserResult.Success:
-                    MessageBox.Show("Пользователь успешно добавлен! ", "Успех! ", MessageBoxButton.OK, MessageBoxImage.Information);
-                    break;
-                case AddUserResult.DatabaseError:
-                    MessageBox.Show("Ошибка подключения к базе данных. ", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                    Environment.Exit(-1);
-                    break;
-                case AddUserResult.AlreadyExists:
-                    MessageBox.Show("Пользователь уже существует. ", "Предупреждение! ", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    break;
+                AddUserResult res = db.AddUser(login, password);
+                switch (res)
+                {
+                    case AddUserResult.Success:
+                        MessageBox.Show("Пользователь успешно добавлен! ", "Успех! ", MessageBoxButton.OK, MessageBoxImage.Information);
+                        break;
+                    case AddUserResult.DatabaseError:
+                        MessageBox.Show("Ошибка подключения к базе данных. ", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                        Environment.Exit(-1);
+                        break;
+                    case AddUserResult.AlreadyExists:
+                        MessageBox.Show("Пользователь уже существует. ", "Предупреждение! ", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        break;
+                }
             }
         }
     }

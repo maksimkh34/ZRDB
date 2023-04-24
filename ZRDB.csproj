@@ -14,7 +14,11 @@
     <BaseOutputPath>D:\ZRDB</BaseOutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Resources\Eye.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Resource Include="icon.ico" />
+    <Resource Include="Resources\Eye.png" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
