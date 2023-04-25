@@ -47,18 +47,17 @@ namespace ZRDB
                     form.Show();
                     break;
                 case LoginResult.InvalidPassword:
-                    MessageBox.Show("Указан неверный пароль. ", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBoxInterface.ShowError("Указан неверный пароль. ", false);
                     break;
                 case LoginResult.InvalidLogin:
-                    MessageBox.Show("Данного пользователя не существует. ", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBoxInterface.ShowError("Данного пользователя не существует.  ", false);
                     break;
-                case LoginResult.ConnectionError: 
-                    MessageBox.Show("Ошибка открытия базы данных. Попробуйте переустановить программу. ", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                case LoginResult.ConnectionError:
                     MessageBox.Show((string)Application.Current.Properties["ConnectionErrorText"]);
-                    Environment.Exit(-1);
+                    MessageBoxInterface.ShowError();
                     break;
                 case LoginResult.InvalidMethod:
-                    MessageBox.Show("Данный метод аутентификации отключен. ", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBoxInterface.ShowWarn("Данный метод аутентификации отключен. ");
                     break;
             }
 

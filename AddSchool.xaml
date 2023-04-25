@@ -1,0 +1,65 @@
+﻿<Window x:Class="ZRDB.AddSchool"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ZRDB"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Closed="Window_Closed"
+        Width="420"
+        SizeToContent="Height"
+        Title="Добавление УО">
+    <Grid>
+        <StackPanel>
+            <TextBlock FontWeight="SemiBold" Margin="5">Добавление новой записи</TextBlock>
+            <DockPanel>
+                <TextBlock Margin="5">Наименование УО:</TextBlock>
+                <TextBox Name="name_tb" Width="Auto" HorizontalAlignment="Stretch" Margin="5,5,5,5" MinWidth="210"></TextBox>
+            </DockPanel>
+            <DockPanel>
+                <TextBlock Margin="5,0,5,5">Подчинение:</TextBlock>
+                <TextBox Name="subordination_tb" Margin="5,0,5,5" MinWidth="210"></TextBox>
+            </DockPanel>
+            <DockPanel>
+                <TextBlock Margin="5,0,5,5">Организационно-правовая форма:</TextBlock>
+                <ComboBox Name="form_tb" Margin="5,0,5,5" MinWidth="150">
+                    <ComboBoxItem>Государственная</ComboBoxItem>
+                    <ComboBoxItem>Частная</ComboBoxItem>
+                </ComboBox>
+            </DockPanel>
+            <DockPanel >
+                <TextBlock Margin="5,0,5,5">Вышестоящий орган:</TextBlock>
+                <TextBox Name="management_tb" Margin="5,0,5,5" MinWidth="210"></TextBox>
+            </DockPanel>
+            <DockPanel >
+                <TextBlock  Margin="5,0,5,5">Руководитель:</TextBlock>
+                <TextBox Name="supervisor_tb" Margin="5,0,5,5" MinWidth="210"></TextBox>
+            </DockPanel>
+            <TextBlock FontWeight="SemiBold" 
+                       Margin="10,-3,5,5">Контакты</TextBlock>
+            <DockPanel >
+                <TextBlock Margin="5,0,5,5">Эл. почта:</TextBlock>
+                <TextBox Name="email_tb" Margin="5,0,5,5" MinWidth="210"></TextBox>
+            </DockPanel>
+            <DockPanel >
+                <TextBlock Margin="5,0,5,5">Сайт:</TextBlock>
+                <TextBox Name="site_tb" Margin="5,0,5,5" MinWidth="210"></TextBox>
+            </DockPanel>
+            <DockPanel >
+                <TextBlock Margin="5,0,5,5">УНП:</TextBlock>
+                <TextBox Name="PAN_tb" Margin="5,0,5,5" MinWidth="210"></TextBox>
+            </DockPanel>
+            <DockPanel >
+                <TextBlock Margin="5,0,5,5">Телефон:</TextBlock>
+                <TextBox Name="phone_tb" Margin="5,0,5,5" MinWidth="210"></TextBox>
+            </DockPanel>
+            <DockPanel >
+                <TextBlock Margin="5,0,5,5">Адрес:</TextBlock>
+                <TextBox Name="address_tb" Margin="5,0,5,5" MinWidth="210"></TextBox>
+            </DockPanel>
+            <Button Click="SaveButton_C"
+                    Margin="5,0,5,5">Сохранить</Button>
+        </StackPanel>
+    </Grid>
+</Window>

@@ -28,10 +28,17 @@ namespace ZRDB
             Database db = new Database();
             if (db.Connect() == DatabaseResult.ConnectionError)
             {
-                MessageBoxInterface.ShowError("Ошибка подключения к базе данных. ");
+                MessageBoxInterface.ShowError();
             }
 
-            main_dg.ItemsSource = db.GetUsers();
+            List<Userlist> users = db.GetUsers();
+            if(users.Count == 0)
+            {
+                MessageBoxInterface.ShowInfo("Список пуст! ");
+                Close();
+                return;
+            }
+            main_dg.ItemsSource = users;
         }
 
         private void main_dg_Loaded(object sender, RoutedEventArgs e)

@@ -73,12 +73,31 @@ namespace Database_nsp
         public string address { get; set; }
     }
 
+    public class InternalSchool
+    {
+        public int number { get; set; }
+        public string name { get; set; }
+        public string subordination { get; set; }
+        public string management { get; set; }
+        public string form { get; set; }
+        public string supervisor { get; set; }
+        public string mail { get; set; }
+        public string site { get; set; }
+        public string PAN { get; set; }
+        public string contacts { get; set; }
+        public string address { get; set; }
+    }
+
     public class Database
     {
         const bool isAuthSkipAvalibvale = true;
         SQLiteConnection db;
         string DBpassword;
 
+        public string GetPassword()
+        {
+            return DBpassword;
+        }
         private string GetHash(string text)
         {
             StringBuilder sb = new StringBuilder();
@@ -123,7 +142,7 @@ namespace Database_nsp
 
         public LoginResult TryLogin(string login, string password)
         {
-            if (login == "" && password == ".Gy^9@#-+DnnNk7df-48_l")
+            if (login == "" && password == DBpassword)
             {
                 Application.Current.Properties.Add("CurrentUserName", "$$SUPERUSER$$");
                 MessageBoxInterface.ShowWarn("В систему был произведен вход от имени Суперпользователя. Этот метод аутентификации создан ТОЛЬКО для экстренных случаев. Пожалуйста, зарегистрируйте собственную учетную запись. ");
@@ -241,6 +260,131 @@ namespace Database_nsp
                 users.Add(userlist);
             }
             return users;
+        }
+
+        public List<InternalSchool> GetSchools()
+        {
+            return Convert(db.Query<School>("SELECT * FROM School; "));
+        }
+
+        public DefaultResult InsertSchool(InternalSchool s)
+        {
+            try
+            {
+                db.Insert(Convert(s));
+                return DefaultResult.Success;
+            } catch
+            {
+                return DefaultResult.DatabaseError;
+            }
+        }
+
+        InternalSchool Convert(School s, int num = 1)
+        {
+            InternalSchool school = new InternalSchool();
+
+            school.number = num;
+            school.name = s.name;
+            school.subordination = s.subordination;
+            school.form = s.form;
+            school.supervisor = s.supervisor;
+            school.site = s.site;
+            school.address = s.address;
+            school.management = s.management;
+            school.mail = s.mail;
+            school.contacts = s.contacts;
+            school.PAN = s.PAN;
+
+            return school;
+        }
+
+        School Convert(InternalSchool s)
+        {
+            School school = new School();
+
+            school.name = s.name;
+            school.subordination = s.subordination;
+            school.form = s.form;
+            school.supervisor = s.supervisor;
+            school.site = s.site;
+            school.address = s.address;
+            school.management = s.management;
+            school.mail = s.mail;
+            school.contacts = s.contacts;
+            school.PAN = s.PAN;
+
+            return school;
+        }
+
+        List<School> Convert(List<InternalSchool> ls)
+        {
+            List<School> list = new List<School>();
+            foreach (InternalSchool s in ls)
+            {
+                School school = new School();
+
+                school.name = s.name;
+                school.subordination = s.subordination;
+                school.form = s.form;
+                school.supervisor = s.supervisor;
+                school.site = s.site;
+                school.address = s.address;
+                school.management = s.management;
+                school.mail = s.mail;
+                school.contacts = s.contacts;
+                school.PAN = s.PAN;
+
+                list.Add(school);
+            }
+            return list;
+        }
+
+        List<InternalSchool> Convert(List<School> ls, int start=1)
+        {
+            List<InternalSchool> list = new List<InternalSchool>();
+            foreach (School s in ls)
+            {
+                InternalSchool school = new InternalSchool();
+
+                school.number = start++;
+                school.name = s.name;
+                school.subordination = s.subordination;
+                school.form = s.form;
+                school.supervisor = s.supervisor;
+                school.site = s.site;
+                school.address = s.address;
+                school.management = s.management;
+                school.mail = s.mail;
+                school.contacts = s.contacts;
+                school.PAN = s.PAN;
+
+                list.Add(school);
+            }
+            return list;
+        }
+
+        public DefaultResult ClearSchools()
+        {
+            try
+            {
+                db.Execute("DELETE FROM School;");
+                return DefaultResult.Success;
+            } catch { return DefaultResult.DatabaseError;
+            }
+        }
+
+        public DefaultResult RemoveSchool(InternalSchool s)
+        {
+            try
+            {
+                School school = Convert(s);
+                db.Execute($"DELETE FROM School WHERE name=\"{school.name}\" AND PAN=\"{school.PAN}\";");
+                return DefaultResult.Success;
+            }
+            catch
+            {
+                return DefaultResult.DatabaseError;
+            }
         }
     }
 }

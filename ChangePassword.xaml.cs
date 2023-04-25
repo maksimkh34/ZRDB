@@ -66,7 +66,7 @@ namespace ZRDB
             Database db = new Database();
             if (db.Connect() == DatabaseResult.ConnectionError)
             {
-                MessageBoxInterface.ShowError("Ошибка подключения к базе данных. ");
+                MessageBoxInterface.ShowError();
             }
             DefaultResult res = db.ChangePassword(password);
             switch (res)
@@ -76,7 +76,7 @@ namespace ZRDB
                     Close();
                     break;
                 case DefaultResult.DatabaseError:
-                    MessageBoxInterface.ShowError("Ошибка подключения к базе данных. ");
+                    MessageBoxInterface.ShowError();
                     break;
             }
         }

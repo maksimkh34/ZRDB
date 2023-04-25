@@ -35,7 +35,7 @@ namespace ZRDB
             Database db = new Database();
             if (db.Connect() == DatabaseResult.ConnectionError)
             {
-                MessageBoxInterface.ShowError("Ошибка подключения к базе данных. ");
+                MessageBoxInterface.ShowError();
             }
 
             string login = login_tb.Text;

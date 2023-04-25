@@ -34,7 +34,9 @@ namespace ZRDB
 
         private void EIButton_C(object sender, EventArgs e)
         {
-
+            Schools form = new Schools();
+            Hide();
+            form.ShowDialog();
         }
 
         private void KidsButton_C(object sender, EventArgs e)
@@ -137,14 +139,15 @@ namespace ZRDB
         private void UsersListButton_C(object sender, EventArgs e)
         {
             UsersList form = new UsersList();
-            form.ShowDialog();
+            try { form.ShowDialog(); } catch { }
         }
 
         // Help
 
         private void HelpButton_C(object sender, EventArgs e)
         {
-
+            Help form = new Help();
+            form.ShowDialog();
         }
     }
 }
