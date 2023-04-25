@@ -14,9 +14,7 @@
         Width="1200" Height="700">
     <Grid>
         <Menu>
-            <MenuItem Click="AddSchool" Header="Добавить">
-                <WindowsFormsHost Height="100" Width="100"/>
-            </MenuItem>
+            <MenuItem Click="AddSchool" Header="Добавить"/>
             <MenuItem Header="Сервис">
                 <MenuItem Click="MI_Update" Header="Обновить"></MenuItem>
                 <MenuItem Click="MI_Clear" Header="Очистить базу данных"></MenuItem>

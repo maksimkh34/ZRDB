@@ -36,6 +36,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="Microsoft.Office.Interop.Excel" Version="15.0.4795.1001" />
+    <PackageReference Include="Microsoft.Office.Interop.Word" Version="15.0.4797.1004" />
     <PackageReference Include="sqlite-net" Version="1.6.292" />
     <PackageReference Include="sqlite-net-sqlcipher" Version="1.8.116" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />

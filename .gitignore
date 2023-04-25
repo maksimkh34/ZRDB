@@ -1,0 +1,6 @@
+*.config
+*.clef
+*.sarif
+/bin/
+/obj/
+/.vs/
