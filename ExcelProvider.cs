@@ -36,7 +36,7 @@ namespace ZRDB
             return dataTable;
         }
 
-        public static void ToExcelFile(DataTable dataTable, string filePath, bool overwriteFile = true)
+        public static void ToExcelFile(DataTable dataTable, string filePath, List<string> columnNames, string tableName, bool overwriteFile = true)
         {
             if (System.IO.File.Exists(filePath) && overwriteFile)
                 System.IO.File.Delete(filePath);
@@ -49,8 +49,6 @@ namespace ZRDB
                 using (var command = new OleDbCommand())
                 {
                     command.Connection = connection;
-                    var columnNames = new List<string> { "№п/п", "Наименование", "Подчинение", "Вышестоящий орган", "Форма управления", "Управляющий", "Электронная почта", "Сайт", "УНП", "Контакты", "Адрес"};
-                    var tableName = "Учреждения образования";
                     command.CommandText = $"CREATE TABLE [{tableName}] ({string.Join(",", columnNames.Select(c => $"[{c}] VARCHAR").ToArray())});";
                     command.ExecuteNonQuery();
                     foreach (DataRow row in dataTable.Rows)

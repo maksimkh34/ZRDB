@@ -1,0 +1,92 @@
+﻿<Window x:Class="ZRDB.AddKid"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ZRDB"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Width="450"
+        Height="545"
+        MaxHeight="545"
+        MinHeight="545"
+        ResizeMode="CanResize"
+        Title="Добавить информацию" SizeToContent="Height">
+    <Grid>
+        <StackPanel>
+            <DockPanel>
+                <TextBlock Margin="5">Номер путевки:</TextBlock>
+                <TextBox Name="VoucherID" Margin="0,5,5,5"></TextBox>
+            </DockPanel>
+            <DockPanel>
+                <TextBlock Margin="5,0,5,5">Кем выдана: </TextBlock>
+                <TextBox Name="VoucherExtraditer" Margin="0,0,5,5"></TextBox>
+            </DockPanel>
+            <DockPanel>
+                <TextBlock Margin="5,0,5,5">Полное имя: </TextBlock>
+                <TextBox Name="FullName" Margin="0,0,5,5"></TextBox>
+            </DockPanel>
+            <DockPanel>
+                <TextBlock Margin="5,0,5,5">Дата рождения: </TextBlock>
+                <TextBox Name="DateOfBirth" Margin="0,0,5,5"></TextBox>
+            </DockPanel>
+            <DockPanel>
+                <TextBlock Margin="5,0,5,5">Школа: </TextBlock>
+                <TextBox Name="School" Margin="0,0,5,5"></TextBox>
+            </DockPanel>
+            <DockPanel>
+                <TextBlock Margin="5,0,5,5">Класс: </TextBlock>
+                <TextBox Name="Grade" Margin="0,0,5,5"></TextBox>
+            </DockPanel>
+            <DockPanel>
+                <TextBlock Margin="5,0,5,5">Возраст: </TextBlock>
+                <TextBox Name="Age" Margin="0,0,5,5"></TextBox>
+            </DockPanel>
+            <DockPanel>
+                <TextBlock Margin="5,0,5,5">Домашний адрес: </TextBlock>
+                <TextBox Name="HomeAddress" Margin="0,0,5,5"></TextBox>
+            </DockPanel>
+            <DockPanel>
+                <TextBlock Margin="5,0,5,5">Номер телефона: </TextBlock>
+                <TextBox Name="PhoneNumber" Margin="0,0,5,5"></TextBox>
+            </DockPanel>
+            <DockPanel>
+                <TextBlock Margin="5,0,5,5">Полное имя матери: </TextBlock>
+                <TextBox Name="MotherFullName" Margin="0,0,5,5"></TextBox>
+            </DockPanel>
+            <DockPanel>
+                <TextBlock Margin="5,0,5,5">Мобильный телефон матери: </TextBlock>
+                <TextBox Name="MotherMobPhone" Margin="0,0,5,5"></TextBox>
+            </DockPanel>
+            <DockPanel>
+                <TextBlock Margin="5,0,5,5">Место работы матери: </TextBlock>
+                <TextBox Name="MotherJob" Margin="0,0,5,5"></TextBox>
+            </DockPanel>
+            <DockPanel>
+                <TextBlock Margin="5,0,5,5">Полное имя отца: </TextBlock>
+                <TextBox Name="FatherFullName" Margin="0,0,5,5"></TextBox>
+            </DockPanel>
+            <DockPanel>
+                <TextBlock Margin="5,0,5,5">Мобильный телефон отца: </TextBlock>
+                <TextBox Name="FatherMobPhone" Margin="0,0,5,5"></TextBox>
+            </DockPanel>
+            <DockPanel>
+                <TextBlock Margin="5,0,5,5">Место работы отца:</TextBlock>
+                <TextBox Name="FatherJob" Margin="0,0,5,5"></TextBox>
+            </DockPanel>
+            <DockPanel>
+                <TextBlock Margin="5,0,5,5">Отряд:</TextBlock>
+                <TextBox Name="Group" Margin="0,0,5,5"></TextBox>
+            </DockPanel>
+            <DockPanel>
+                <TextBlock Margin="5,0,5,5">Семья: </TextBlock>
+                <TextBox Name="Family" Margin="0,0,5,5"></TextBox>
+            </DockPanel>
+            <DockPanel>
+                <TextBlock Margin="5,0,5,5">Примечания:</TextBlock>
+            </DockPanel>
+            <TextBox Name="Notes" Height="50" TextWrapping="WrapWithOverflow" Margin="5,0,5,5"></TextBox>
+            <Button Click="AddKidButton_C" Margin="5">Сохранить</Button>
+        </StackPanel>
+    </Grid>
+</Window>

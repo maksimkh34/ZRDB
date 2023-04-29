@@ -1,6 +1,7 @@
 ﻿using Database_nsp;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,7 +42,9 @@ namespace ZRDB
 
         private void KidsButton_C(object sender, EventArgs e)
         {
-
+            Kids form = new();
+            Hide();
+            form.ShowDialog();
         }
 
         private void GroupsButton_C(object sender, EventArgs e)
@@ -148,6 +151,16 @@ namespace ZRDB
         {
             Help form = new Help();
             form.ShowDialog();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            if(File.Exists("changelog.cl"))
+            {
+                string entire = File.ReadAllText("changelog.cl");
+                MessageBox.Show(entire, "История изменений", MessageBoxButton.OK, MessageBoxImage.Information);
+                File.Delete("changelog.cl");
+            }
         }
     }
 }

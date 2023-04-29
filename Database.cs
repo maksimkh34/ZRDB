@@ -1,10 +1,8 @@
 ﻿using SQLite;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using ZRDB;
 
@@ -88,6 +86,50 @@ namespace Database_nsp
         public string address { get; set; }
     }
 
+    class Kid
+    {
+        public int VoucherID { get; set; }
+        public string VoucherExtraditer { get; set; }
+        public string FullName { get; set; }
+        public string DateOfBirth { get; set; }
+        public string School { get; set; }
+        public string Grade { get; set; }
+        public string Age { get; set; }
+        public string HomeAddress { get; set; }
+        public string PhoneNumber { get; set; }
+        public string MotherFullName { get; set; }
+        public string MotherMobPhone { get; set; }
+        public string MotherJob { get; set; }
+        public string FatherFullName { get; set; }
+        public string FatherMobPhone { get; set; }
+        public string FatherJob { get; set; }
+        public string Family { get; set; }
+        public string Notes { get; set; }
+        public string Group { get; set; }
+    }
+
+    public class InternalKid
+    {
+        public int Number { get; set; }
+        public int VoucherID { get; set; }
+        public string VoucherExtraditer { get; set; }
+        public string FullName { get; set; }
+        public string DateOfBirth { get; set; }
+        public string School { get; set; }
+        public string Grade { get; set; }
+        public string Age { get; set; }
+        public string HomeAddress { get; set; }
+        public string PhoneNumber { get; set; }
+        public string MotherFullName { get; set; }
+        public string MotherMobPhone { get; set; }
+        public string MotherJob { get; set; }
+        public string FatherFullName { get; set; }
+        public string FatherMobPhone { get; set; }
+        public string FatherJob { get; set; }
+        public string Family { get; set; }
+        public string Notes { get; set; }
+        public string Group { get; set; }
+    }
     public class Database
     {
         const bool isAuthSkipAvalibvale = true;
@@ -146,15 +188,15 @@ namespace Database_nsp
             {
                 Application.Current.Properties.Add("CurrentUserName", "$$SUPERUSER$$");
                 MessageBoxInterface.ShowWarn("В систему был произведен вход от имени Суперпользователя. Этот метод аутентификации создан ТОЛЬКО для экстренных случаев. Пожалуйста, зарегистрируйте собственную учетную запись. ");
-                return LoginResult.Success; 
+                return LoginResult.Success;
             }
             if (isAuthSkipAvalibvale && login == "" && password == "")
             {
                 Application.Current.Properties.Add("CurrentUserName", "$$SKIPPEDLOGIN$$");
                 return LoginResult.Success;
             }
-            else if (!isAuthSkipAvalibvale && login == "" && password == "") 
-            { 
+            else if (!isAuthSkipAvalibvale && login == "" && password == "")
+            {
                 return LoginResult.InvalidMethod;
             }
 
@@ -166,11 +208,11 @@ namespace Database_nsp
 
             List<User> Users = db.Query<User>("SELECT * FROM User");
 
-            foreach(User user_f in Users)
+            foreach (User user_f in Users)
             {
-                if(user_f.Username == checkingUser.Username)
+                if (user_f.Username == checkingUser.Username)
                 {
-                    if(user_f.Passhash == checkingUser.Passhash)
+                    if (user_f.Passhash == checkingUser.Passhash)
                     {
                         Application.Current.Properties.Add("CurrentUserName", user_f.Username);
                         return LoginResult.Success;
@@ -187,7 +229,7 @@ namespace Database_nsp
         public AddUserResult AddUser(string login, string password)
         {
             List<User> users = db.Query<User>("SELECT * FROM User WHERE Username=\"" + login + "\"");
-            if(users.Count != 0) 
+            if (users.Count != 0)
             {
                 return AddUserResult.AlreadyExists;
             }
@@ -197,10 +239,11 @@ namespace Database_nsp
             addingUser.Username = login;
             addingUser.Passhash = password;
 
-            try 
+            try
             {
                 db.Insert(addingUser);
-            } catch
+            }
+            catch
             {
                 return AddUserResult.DatabaseError;
             }
@@ -215,8 +258,8 @@ namespace Database_nsp
                 return RemoveUserResult.removingLastUser;
             }
 
-            List<User> list = db.Query<User>("SELECT * FROM User WHERE Username=\"" + Application.Current.Properties["CurrentUserName"] +"\";");
-            if(list.Count != 0)
+            List<User> list = db.Query<User>("SELECT * FROM User WHERE Username=\"" + Application.Current.Properties["CurrentUserName"] + "\";");
+            if (list.Count != 0)
             {
                 try
                 {
@@ -242,7 +285,8 @@ namespace Database_nsp
             {
                 db.Execute("UPDATE User SET Passhash=\"" + password + "\" WHERE Username=\"" + Application.Current.Properties["CurrentUserName"] + "\";");
                 return DefaultResult.Success;
-            } catch
+            }
+            catch
             {
                 return DefaultResult.DatabaseError;
             }
@@ -252,7 +296,7 @@ namespace Database_nsp
         {
             List<Userlist> users = new List<Userlist>();
             List<User> users_class = db.Query<User>("SELECT * FROM User");
-            for(int i = 0; i < users_class.Count; i++) 
+            for (int i = 0; i < users_class.Count; i++)
             {
                 Userlist userlist = new Userlist();
                 userlist.number = i + 1;
@@ -273,7 +317,8 @@ namespace Database_nsp
             {
                 db.Insert(Convert(s));
                 return DefaultResult.Success;
-            } catch
+            }
+            catch
             {
                 return DefaultResult.DatabaseError;
             }
@@ -316,6 +361,32 @@ namespace Database_nsp
             return school;
         }
 
+        Kid Convert(InternalKid k)
+        {
+            Kid kid = new();
+
+            kid.VoucherID = k.VoucherID;
+            kid.VoucherExtraditer = k.VoucherExtraditer;
+            kid.FullName = k.FullName;
+            kid.DateOfBirth = k.DateOfBirth;
+            kid.School = k.School;
+            kid.Grade = k.Grade;
+            kid.Age = k.Age;
+            kid.HomeAddress = k.HomeAddress;
+            kid.PhoneNumber = k.PhoneNumber;
+            kid.MotherFullName = k.MotherFullName;
+            kid.MotherMobPhone = k.MotherFullName;
+            kid.MotherJob = k.MotherJob;
+            kid.FatherFullName = k.FatherFullName;
+            kid.FatherMobPhone = k.FatherMobPhone;
+            kid.FatherJob = k.FatherJob;
+            kid.Family = k.Family;
+            kid.Notes = k.Notes;
+            kid.Group = k.Group;
+
+            return kid;
+        }
+
         List<School> Convert(List<InternalSchool> ls)
         {
             List<School> list = new List<School>();
@@ -339,7 +410,7 @@ namespace Database_nsp
             return list;
         }
 
-        List<InternalSchool> Convert(List<School> ls, int start=1)
+        List<InternalSchool> Convert(List<School> ls, int start = 1)
         {
             List<InternalSchool> list = new List<InternalSchool>();
             foreach (School s in ls)
@@ -363,13 +434,92 @@ namespace Database_nsp
             return list;
         }
 
+        List<InternalKid> Convert(List<Kid> ls, int start = 1)
+        {
+            List<InternalKid> list = new List<InternalKid>();
+            foreach (Kid k in ls)
+            {
+                InternalKid kid = new InternalKid();
+
+                kid.Number = start++;
+
+                kid.VoucherID = k.VoucherID;
+                kid.VoucherExtraditer = k.VoucherExtraditer;
+                kid.FullName = k.FullName;
+                kid.DateOfBirth = k.DateOfBirth;
+                kid.School = k.School;
+                kid.Grade = k.Grade;
+                kid.Age = k.Age;
+                kid.HomeAddress = k.HomeAddress;
+                kid.PhoneNumber = k.PhoneNumber;
+                kid.MotherFullName = k.MotherFullName;
+                kid.MotherMobPhone = k.MotherFullName;
+                kid.MotherJob = k.MotherJob;
+                kid.FatherFullName = k.FatherFullName;
+                kid.FatherMobPhone = k.FatherMobPhone;
+                kid.FatherJob = k.FatherJob;
+                kid.Family = k.Family;
+                kid.Notes = k.Notes;
+                kid.Group = k.Group;
+
+                list.Add(kid);
+            }
+            return list;
+        }
+
+        List<Kid> Convert(List<InternalKid> ls, int start = 1)
+        {
+            List<Kid> list = new List<Kid>();
+            foreach (InternalKid kid in ls)
+            {
+                Kid k = new Kid();
+
+                kid.VoucherID = k.VoucherID;
+                kid.VoucherExtraditer = k.VoucherExtraditer;
+                kid.FullName = k.FullName;
+                kid.DateOfBirth = k.DateOfBirth;
+                kid.School = k.School;
+                kid.Grade = k.Grade;
+                kid.Age = k.Age;
+                kid.HomeAddress = k.HomeAddress;
+                kid.PhoneNumber = k.PhoneNumber;
+                kid.MotherFullName = k.MotherFullName;
+                kid.MotherMobPhone = k.MotherFullName;
+                kid.MotherJob = k.MotherJob;
+                kid.FatherFullName = k.FatherFullName;
+                kid.FatherMobPhone = k.FatherMobPhone;
+                kid.FatherJob = k.FatherJob;
+                kid.Family = k.Family;
+                kid.Notes = k.Notes;
+                kid.Group = k.Group;
+
+                list.Add(k);
+            }
+            return list;
+        }
+
         public DefaultResult ClearSchools()
         {
             try
             {
                 db.Execute("DELETE FROM School;");
                 return DefaultResult.Success;
-            } catch { return DefaultResult.DatabaseError;
+            }
+            catch
+            {
+                return DefaultResult.DatabaseError;
+            }
+        }
+        public DefaultResult ClearKids()
+        {
+            try
+            {
+                db.Execute("DELETE FROM Kid;");
+                return DefaultResult.Success;
+            }
+            catch
+            {
+                return DefaultResult.DatabaseError;
             }
         }
 
@@ -386,5 +536,38 @@ namespace Database_nsp
                 return DefaultResult.DatabaseError;
             }
         }
+
+        public List<InternalKid> GetKids()
+        {
+            return Convert(db.Query<Kid>("SELECT * FROM Kid"));
+        }
+
+        public DefaultResult InsertKid(InternalKid kid)
+        {
+            try { 
+                db.Insert(Convert(kid)); 
+                return DefaultResult.Success; 
+            }
+            catch 
+            { 
+                return DefaultResult.DatabaseError; 
+            }
+
+        }
+
+        public DefaultResult RemoveKid(InternalKid k)
+        {
+            try
+            {
+                Kid kid = Convert(k);
+                db.Execute($"DELETE FROM Kid WHERE VoucherID=\"{kid.VoucherID}\" AND FullName=\"{kid.FullName}\";");
+                return DefaultResult.Success;
+            }
+            catch
+            {
+                return DefaultResult.DatabaseError;
+            }
+        }
     }
 }
+

@@ -118,22 +118,23 @@ namespace ZRDB
 
         private void MI_export_excel(object sender, RoutedEventArgs e)
         {
-            Database db = new Database();
+            Database db = new();
             if (db.Connect() == DatabaseResult.ConnectionError)
             {
                 MessageBoxInterface.ShowError(isExit: false);
             }
-            System.Windows.Forms.SaveFileDialog saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-
-            saveFileDialog1.RestoreDirectory = true;
-            saveFileDialog1.Title = "Выберите место для сохранения";
-            saveFileDialog1.DefaultExt = "xlsx";
-            saveFileDialog1.Filter = "Excel File (*.xlsx)|*.xlsx";
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog
+            {
+                RestoreDirectory = true,
+                Title = "Выберите место для сохранения",
+                DefaultExt = "xlsx",
+                Filter = "Excel File (*.xlsx)|*.xlsx"
+            };
 
             saveFileDialog1.ShowDialog();
 
             if (saveFileDialog1.FileName == "") MessageBoxInterface.ShowError("Пожалуйста, выберите место для сохранения. ", false);
-            else { ExcelProvider.ToExcelFile(ExcelProvider.ToDataTable(db.GetSchools()), saveFileDialog1.FileName, true); MessageBoxInterface.ShowDone("Файл сохранен! ");  }
+            else { ExcelProvider.ToExcelFile(ExcelProvider.ToDataTable(db.GetSchools()), saveFileDialog1.FileName, new List<string> { "№п/п", "Наименование", "Подчинение", "Вышестоящий орган", "Форма управления", "Управляющий", "Эл. почта", "Сайт", "УНП", "Контакты", "Адрес" , "Учреждения образования"},"Воспитанники", true); MessageBoxInterface.ShowDone("Файл сохранен! ");  }
         }
 
         private void MI_export_print(object sender, RoutedEventArgs e)
