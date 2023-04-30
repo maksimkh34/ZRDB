@@ -1,17 +1,6 @@
 ﻿using Database_nsp;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace ZRDB
 {
@@ -39,13 +28,13 @@ namespace ZRDB
 
         private void switchVisibleButton_C(object sender, RoutedEventArgs e)
         {
-            if(main_tb.Visibility==Visibility.Hidden)
+            if (main_tb.Visibility == Visibility.Hidden)
             {
                 main_tb.Text = main_pwdtb.Password;
                 main_tb.Visibility = Visibility.Visible;
                 main_pwdtb.Visibility = Visibility.Hidden;
             }
-            else 
+            else
             {
                 main_pwdtb.Password = main_tb.Text;
                 main_tb.Visibility = Visibility.Hidden;
@@ -56,10 +45,11 @@ namespace ZRDB
         private void saveButton_C(object sender, RoutedEventArgs e)
         {
             string password = "";
-            if(main_pwdtb.Visibility == Visibility.Visible)
+            if (main_pwdtb.Visibility == Visibility.Visible)
             {
                 password = main_pwdtb.Password;
-            } else if (main_tb.Visibility == Visibility.Visible)
+            }
+            else if (main_tb.Visibility == Visibility.Visible)
             {
                 password = main_tb.Text;
             }

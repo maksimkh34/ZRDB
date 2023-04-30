@@ -1,18 +1,7 @@
 ﻿using Database_nsp;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace ZRDB
 {
@@ -55,7 +44,7 @@ namespace ZRDB
 
         private void PassportButton_C(object sender, EventArgs e)
         {
-
+            MessageBoxInterface.ShowWarn("Эта таблица сейчас недоступна. ");
         }
 
         // Users
@@ -85,8 +74,8 @@ namespace ZRDB
             {
                 case MessageBoxResult.Yes:
                     Database db = new Database();
-                    DatabaseResult resultConnect= db.Connect();
-                    switch(resultConnect)
+                    DatabaseResult resultConnect = db.Connect();
+                    switch (resultConnect)
                     {
                         case DatabaseResult.Success:
                             RemoveUserResult removeResult = db.RemoveUser();
@@ -106,7 +95,7 @@ namespace ZRDB
                                     MessageBoxResult isRemovingLastUser = MessageBox.Show("Внимание! Вы пытаетесь удалить последнего пользователя в списке. " +
                                         "Если список будет пуст, то после перезапуска программы получить доступ к базе данных будет невозможно. Вы точно хотите удалить этого пользователя?",
                                         "Внимание!", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No);
-                                    switch(isRemovingLastUser)
+                                    switch (isRemovingLastUser)
                                     {
                                         case MessageBoxResult.Yes:
                                             RemoveUserResult forceRemoveResult = db.RemoveUser(true);
@@ -123,15 +112,15 @@ namespace ZRDB
                                                     MessageBoxInterface.ShowError(message: "Пользователь не найден.", false);
                                                     break;
                                             }
-                                            break; 
-                                        case MessageBoxResult.No: 
+                                            break;
+                                        case MessageBoxResult.No:
                                             break;
                                     }
                                     break;
                             }
                             break;
                         case DatabaseResult.ConnectionError:
-                            MessageBoxInterface.ShowError(isExit:true);
+                            MessageBoxInterface.ShowError(isExit: true);
                             break;
                     }
                     break;
@@ -156,7 +145,7 @@ namespace ZRDB
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            if(File.Exists("changelog.cl"))
+            if (File.Exists("changelog.cl"))
             {
                 string entire = File.ReadAllText("changelog.cl");
                 MessageBox.Show(entire, "История изменений", MessageBoxButton.OK, MessageBoxImage.Information);

@@ -1,18 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Mail;
 using System.Net;
+using System.Net.Mail;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace ZRDB
 {
@@ -50,7 +40,8 @@ namespace ZRDB
                 EnableSsl = true
             };
 
-            try { 
+            try
+            {
                 smtpClient.Send("zudbalogs@bk.ru", "maksimkh34@duck.com", "AutomaticBugReport", MessageText);
                 MessageBoxInterface.ShowDone("Письмо отправлено. Ожидайте ответа на указанную в форме почту");
             }

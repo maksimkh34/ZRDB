@@ -1,17 +1,8 @@
 ﻿using Database_nsp;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Windows.Forms;
 
 namespace ZRDB
@@ -29,13 +20,13 @@ namespace ZRDB
         }
         private void MI_Clear(object sender, RoutedEventArgs e)
         {
-            ConfirmClearKids confirmClear = new ConfirmClearKids();
+            ConfirmClearKids confirmClear = new();
             confirmClear.ShowDialog();
             Window_Loaded(sender, e);
         }
         private void MI_remove(object sender, RoutedEventArgs e)
         {
-            Database db = new Database();
+            Database db = new();
             if (db.Connect() == DatabaseResult.ConnectionError)
             {
                 MessageBoxInterface.ShowError(isExit: false);
@@ -54,7 +45,7 @@ namespace ZRDB
             {
                 MessageBoxInterface.ShowError(isExit: false);
             }
-            SaveFileDialog saveFileDialog1 = new SaveFileDialog
+            SaveFileDialog saveFileDialog1 = new()
             {
                 RestoreDirectory = true,
                 Title = "Выберите место для сохранения",
@@ -65,21 +56,24 @@ namespace ZRDB
             saveFileDialog1.ShowDialog();
 
             if (saveFileDialog1.FileName == "") MessageBoxInterface.ShowError("Пожалуйста, выберите место для сохранения. ", false);
-            else { ExcelProvider.ToExcelFile(ExcelProvider.ToDataTable(db.GetKids()), saveFileDialog1.FileName, new List<string> { "№п/п", "Номер путевки", "Кто выдал путевку",
+            else
+            {
+                ExcelProvider.ToExcelFile(ExcelProvider.ToDataTable(db.GetKids()), saveFileDialog1.FileName, new List<string> { "№п/п", "Номер путевки", "Кто выдал путевку",
                 "Полное имя", "Дата рождения", "Школа", "Класс", "Возраст", "Домашний адрес",
                 "Номер телефона", "Полное имя матери", "Мобильный телефон матери", "Место работы матери",
-                "Полное имя отца", "Мобильный телефон отца", "Место работы отца", "Семья", "Примечания", "Отряд"}, "Воспитанники", true); MessageBoxInterface.ShowDone("Файл сохранен! "); }
+                "Полное имя отца", "Мобильный телефон отца", "Место работы отца", "Семья", "Примечания", "Отряд"}, "Воспитанники", true); MessageBoxInterface.ShowDone("Файл сохранен! ");
+            }
 
         }
         private void MI_export_print(object sender, RoutedEventArgs e)
         {
-            System.Windows.Controls.PrintDialog printDlg = new System.Windows.Controls.PrintDialog();
+            System.Windows.Controls.PrintDialog printDlg = new();
             printDlg.PrintVisual(main_dg, "Печать таблицы воспитанников");
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            Database db = new Database();
+            Database db = new();
             if (db.Connect() == DatabaseResult.ConnectionError)
             {
                 MessageBoxInterface.ShowError(isExit: false);
@@ -91,9 +85,9 @@ namespace ZRDB
             main_dg.Columns.Clear();
 
             List<string> namings = new()
-            { "№п/п", "Номер путевки", "Кто выдал путевку", 
-                "Полное имя", "Дата рождения", "Школа", "Класс", "Возраст", "Домашний адрес", 
-                "Номер телефона", "Полное имя матери", "Мобильный телефон матери", "Место работы матери", 
+            { "№п/п", "Номер путевки", "Кто выдал путевку",
+                "Полное имя", "Дата рождения", "Школа", "Класс", "Возраст", "Домашний адрес",
+                "Номер телефона", "Полное имя матери", "Мобильный телефон матери", "Место работы матери",
                 "Полное имя отца", "Мобильный телефон отца", "Место работы отца", "Семья", "Примечания", "Отряд" };
 
             List<InternalKid> list = db.GetKids();
@@ -102,8 +96,10 @@ namespace ZRDB
                 DataGridTextColumn[] columns = new DataGridTextColumn[19];
                 for (int i = 0; i < 19; i++)
                 {
-                    columns[i] = new DataGridTextColumn();
-                    columns[i].Header = namings[i];
+                    columns[i] = new DataGridTextColumn
+                    {
+                        Header = namings[i]
+                    };
                     main_dg.Columns.Add(columns[i]);
                 }
             }
@@ -121,16 +117,16 @@ namespace ZRDB
 
         private void AddKidButton_C(object sender, RoutedEventArgs e)
         {
-            AddKid form = new AddKid();
+            AddKid form = new();
             form.ShowDialog();
             Window_Loaded(sender, e);
         }
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            Main f = new Main();
+            Main f = new();
             f.Show();
         }
     }
-    
+
 }

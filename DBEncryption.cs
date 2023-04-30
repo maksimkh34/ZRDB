@@ -1,11 +1,6 @@
 ﻿using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Principal;
-using System.ServiceModel.Channels;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace ZRDB
@@ -34,13 +29,14 @@ namespace ZRDB
                 string s1 = pass.GetValue("p1").ToString();
                 string s2 = pass.GetValue("p2").ToString();
                 return new string[] { s1, s2 };
-            } catch 
+            }
+            catch
             {
                 MessageBox.Show("Ошибка открытия реестра. ", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 Environment.Exit(-1);
                 return new string[0];
             }
-            
+
         }
 
         public static bool isAdminRights()

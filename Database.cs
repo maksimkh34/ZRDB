@@ -47,8 +47,8 @@ namespace Database_nsp
 
     public class Userlist
     {
-        public int number { get; set; }
-        public string name { get; set; }
+        public int Number { get; set; }
+        public string Name { get; set; }
     }
 
     class User
@@ -59,31 +59,31 @@ namespace Database_nsp
 
     class School
     {
-        public string name { get; set; }
-        public string subordination { get; set; }
-        public string management { get; set; }
-        public string form { get; set; }
-        public string supervisor { get; set; }
-        public string mail { get; set; }
-        public string site { get; set; }
+        public string Name { get; set; }
+        public string Subordination { get; set; }
+        public string Management { get; set; }
+        public string Form { get; set; }
+        public string Supervisor { get; set; }
+        public string Mail { get; set; }
+        public string Site { get; set; }
         public string PAN { get; set; }
-        public string contacts { get; set; }
-        public string address { get; set; }
+        public string Contacts { get; set; }
+        public string Address { get; set; }
     }
 
     public class InternalSchool
     {
-        public int number { get; set; }
-        public string name { get; set; }
-        public string subordination { get; set; }
-        public string management { get; set; }
-        public string form { get; set; }
-        public string supervisor { get; set; }
-        public string mail { get; set; }
-        public string site { get; set; }
+        public int Number { get; set; }
+        public string Name { get; set; }
+        public string Subordination { get; set; }
+        public string Management { get; set; }
+        public string Form { get; set; }
+        public string Supervisor { get; set; }
+        public string Mail { get; set; }
+        public string Site { get; set; }
         public string PAN { get; set; }
-        public string contacts { get; set; }
-        public string address { get; set; }
+        public string Contacts { get; set; }
+        public string Address { get; set; }
     }
 
     class Kid
@@ -133,35 +133,32 @@ namespace Database_nsp
 
     class Group
     {
-        public string name { get; set; }
+        public string Name { get; set; }
     }
 
     public class Database
     {
         const bool isAuthSkipAvalibvale = true;
         SQLiteConnection db;
-        string DBpassword;
+        readonly string DBpassword;
 
         public string GetPassword()
         {
             return DBpassword;
         }
-        private string GetHash(string text)
+        private static string GetHash(string text)
         {
-            StringBuilder sb = new StringBuilder();
-            using (MD5 md5 = MD5.Create())
-            {
-                byte[] hashValue = md5.ComputeHash(Encoding.UTF8.GetBytes(text.ToCharArray()));
+            StringBuilder sb = new();
+            byte[] hashValue = MD5.HashData(Encoding.UTF8.GetBytes(text.ToCharArray()));
 
-                foreach (byte b in hashValue)
-                {
-                    sb.Append($"{b:X2}");
-                }
+            foreach (byte b in hashValue)
+            {
+                sb.Append($"{b:X2}");
             }
             return sb.ToString();
         }
 
-        string getDefaultDBPath()
+        static string GetDefaultDBPath()
         {
             return "D:\\ZRDB\\";
         }
@@ -176,7 +173,7 @@ namespace Database_nsp
         {
             try
             {
-                var options = new SQLiteConnectionString(getDefaultDBPath() + "data.zb", true,
+                var options = new SQLiteConnectionString(GetDefaultDBPath() + "data.zb", true,
                     key: DBpassword);
                 db = new SQLiteConnection(options);
                 return DatabaseResult.Success;
@@ -208,9 +205,11 @@ namespace Database_nsp
 
             password = GetHash(password);
 
-            User checkingUser = new User();
-            checkingUser.Username = login;
-            checkingUser.Passhash = password;
+            User checkingUser = new()
+            {
+                Username = login,
+                Passhash = password
+            };
 
             List<User> Users = db.Query<User>("SELECT * FROM User");
 
@@ -241,9 +240,11 @@ namespace Database_nsp
             }
             password = GetHash(password);
 
-            User addingUser = new User();
-            addingUser.Username = login;
-            addingUser.Passhash = password;
+            User addingUser = new()
+            {
+                Username = login,
+                Passhash = password
+            };
 
             try
             {
@@ -300,13 +301,15 @@ namespace Database_nsp
 
         public List<Userlist> GetUsers()
         {
-            List<Userlist> users = new List<Userlist>();
+            List<Userlist> users = new();
             List<User> users_class = db.Query<User>("SELECT * FROM User");
             for (int i = 0; i < users_class.Count; i++)
             {
-                Userlist userlist = new Userlist();
-                userlist.number = i + 1;
-                userlist.name = users_class[i].Username;
+                Userlist userlist = new()
+                {
+                    Number = i + 1,
+                    Name = users_class[i].Username
+                };
                 users.Add(userlist);
             }
             return users;
@@ -330,176 +333,107 @@ namespace Database_nsp
             }
         }
 
-        InternalSchool Convert(School s, int num = 1)
+        static School Convert(InternalSchool s)
         {
-            InternalSchool school = new InternalSchool();
-
-            school.number = num;
-            school.name = s.name;
-            school.subordination = s.subordination;
-            school.form = s.form;
-            school.supervisor = s.supervisor;
-            school.site = s.site;
-            school.address = s.address;
-            school.management = s.management;
-            school.mail = s.mail;
-            school.contacts = s.contacts;
-            school.PAN = s.PAN;
+            School school = new()
+            {
+                Name = s.Name,
+                Subordination = s.Subordination,
+                Form = s.Form,
+                Supervisor = s.Supervisor,
+                Site = s.Site,
+                Address = s.Address,
+                Management = s.Management,
+                Mail = s.Mail,
+                Contacts = s.Contacts,
+                PAN = s.PAN
+            };
 
             return school;
         }
 
-        School Convert(InternalSchool s)
+        static Kid Convert(InternalKid k)
         {
-            School school = new School();
-
-            school.name = s.name;
-            school.subordination = s.subordination;
-            school.form = s.form;
-            school.supervisor = s.supervisor;
-            school.site = s.site;
-            school.address = s.address;
-            school.management = s.management;
-            school.mail = s.mail;
-            school.contacts = s.contacts;
-            school.PAN = s.PAN;
-
-            return school;
-        }
-
-        Kid Convert(InternalKid k)
-        {
-            Kid kid = new();
-
-            kid.VoucherID = k.VoucherID;
-            kid.VoucherExtraditer = k.VoucherExtraditer;
-            kid.FullName = k.FullName;
-            kid.DateOfBirth = k.DateOfBirth;
-            kid.School = k.School;
-            kid.Grade = k.Grade;
-            kid.Age = k.Age;
-            kid.HomeAddress = k.HomeAddress;
-            kid.PhoneNumber = k.PhoneNumber;
-            kid.MotherFullName = k.MotherFullName;
-            kid.MotherMobPhone = k.MotherFullName;
-            kid.MotherJob = k.MotherJob;
-            kid.FatherFullName = k.FatherFullName;
-            kid.FatherMobPhone = k.FatherMobPhone;
-            kid.FatherJob = k.FatherJob;
-            kid.Family = k.Family;
-            kid.Notes = k.Notes;
-            kid.Group = k.Group;
+            Kid kid = new()
+            {
+                VoucherID = k.VoucherID,
+                VoucherExtraditer = k.VoucherExtraditer,
+                FullName = k.FullName,
+                DateOfBirth = k.DateOfBirth,
+                School = k.School,
+                Grade = k.Grade,
+                Age = k.Age,
+                HomeAddress = k.HomeAddress,
+                PhoneNumber = k.PhoneNumber,
+                MotherFullName = k.MotherFullName,
+                MotherMobPhone = k.MotherFullName,
+                MotherJob = k.MotherJob,
+                FatherFullName = k.FatherFullName,
+                FatherMobPhone = k.FatherMobPhone,
+                FatherJob = k.FatherJob,
+                Family = k.Family,
+                Notes = k.Notes,
+                Group = k.Group
+            };
 
             return kid;
         }
 
-        List<School> Convert(List<InternalSchool> ls)
+        static List<InternalSchool> Convert(List<School> ls, int start = 1)
         {
-            List<School> list = new List<School>();
-            foreach (InternalSchool s in ls)
-            {
-                School school = new School();
-
-                school.name = s.name;
-                school.subordination = s.subordination;
-                school.form = s.form;
-                school.supervisor = s.supervisor;
-                school.site = s.site;
-                school.address = s.address;
-                school.management = s.management;
-                school.mail = s.mail;
-                school.contacts = s.contacts;
-                school.PAN = s.PAN;
-
-                list.Add(school);
-            }
-            return list;
-        }
-
-        List<InternalSchool> Convert(List<School> ls, int start = 1)
-        {
-            List<InternalSchool> list = new List<InternalSchool>();
+            List<InternalSchool> list = new();
             foreach (School s in ls)
             {
-                InternalSchool school = new InternalSchool();
-
-                school.number = start++;
-                school.name = s.name;
-                school.subordination = s.subordination;
-                school.form = s.form;
-                school.supervisor = s.supervisor;
-                school.site = s.site;
-                school.address = s.address;
-                school.management = s.management;
-                school.mail = s.mail;
-                school.contacts = s.contacts;
-                school.PAN = s.PAN;
+                InternalSchool school = new()
+                {
+                    Number = start++,
+                    Name = s.Name,
+                    Subordination = s.Subordination,
+                    Form = s.Form,
+                    Supervisor = s.Supervisor,
+                    Site = s.Site,
+                    Address = s.Address,
+                    Management = s.Management,
+                    Mail = s.Mail,
+                    Contacts = s.Contacts,
+                    PAN = s.PAN
+                };
 
                 list.Add(school);
             }
             return list;
         }
 
-        List<InternalKid> Convert(List<Kid> ls, int start = 1)
+        static List<InternalKid> Convert(List<Kid> ls, int start = 1)
         {
-            List<InternalKid> list = new List<InternalKid>();
+            List<InternalKid> list = new ();
             foreach (Kid k in ls)
             {
-                InternalKid kid = new InternalKid();
+                InternalKid kid = new()
+                {
+                    Number = start++,
 
-                kid.Number = start++;
-
-                kid.VoucherID = k.VoucherID;
-                kid.VoucherExtraditer = k.VoucherExtraditer;
-                kid.FullName = k.FullName;
-                kid.DateOfBirth = k.DateOfBirth;
-                kid.School = k.School;
-                kid.Grade = k.Grade;
-                kid.Age = k.Age;
-                kid.HomeAddress = k.HomeAddress;
-                kid.PhoneNumber = k.PhoneNumber;
-                kid.MotherFullName = k.MotherFullName;
-                kid.MotherMobPhone = k.MotherFullName;
-                kid.MotherJob = k.MotherJob;
-                kid.FatherFullName = k.FatherFullName;
-                kid.FatherMobPhone = k.FatherMobPhone;
-                kid.FatherJob = k.FatherJob;
-                kid.Family = k.Family;
-                kid.Notes = k.Notes;
-                kid.Group = k.Group;
+                    VoucherID = k.VoucherID,
+                    VoucherExtraditer = k.VoucherExtraditer,
+                    FullName = k.FullName,
+                    DateOfBirth = k.DateOfBirth,
+                    School = k.School,
+                    Grade = k.Grade,
+                    Age = k.Age,
+                    HomeAddress = k.HomeAddress,
+                    PhoneNumber = k.PhoneNumber,
+                    MotherFullName = k.MotherFullName,
+                    MotherMobPhone = k.MotherFullName,
+                    MotherJob = k.MotherJob,
+                    FatherFullName = k.FatherFullName,
+                    FatherMobPhone = k.FatherMobPhone,
+                    FatherJob = k.FatherJob,
+                    Family = k.Family,
+                    Notes = k.Notes,
+                    Group = k.Group
+                };
 
                 list.Add(kid);
-            }
-            return list;
-        }
-
-        List<Kid> Convert(List<InternalKid> ls, int start = 1)
-        {
-            List<Kid> list = new List<Kid>();
-            foreach (InternalKid kid in ls)
-            {
-                Kid k = new Kid();
-
-                kid.VoucherID = k.VoucherID;
-                kid.VoucherExtraditer = k.VoucherExtraditer;
-                kid.FullName = k.FullName;
-                kid.DateOfBirth = k.DateOfBirth;
-                kid.School = k.School;
-                kid.Grade = k.Grade;
-                kid.Age = k.Age;
-                kid.HomeAddress = k.HomeAddress;
-                kid.PhoneNumber = k.PhoneNumber;
-                kid.MotherFullName = k.MotherFullName;
-                kid.MotherMobPhone = k.MotherFullName;
-                kid.MotherJob = k.MotherJob;
-                kid.FatherFullName = k.FatherFullName;
-                kid.FatherMobPhone = k.FatherMobPhone;
-                kid.FatherJob = k.FatherJob;
-                kid.Family = k.Family;
-                kid.Notes = k.Notes;
-                kid.Group = k.Group;
-
-                list.Add(k);
             }
             return list;
         }
@@ -534,7 +468,7 @@ namespace Database_nsp
             try
             {
                 School school = Convert(s);
-                db.Execute($"DELETE FROM School WHERE name=\"{school.name}\" AND PAN=\"{school.PAN}\";");
+                db.Execute($"DELETE FROM School WHERE name=\"{school.Name}\" AND PAN=\"{school.PAN}\";");
                 return DefaultResult.Success;
             }
             catch
@@ -550,13 +484,14 @@ namespace Database_nsp
 
         public DefaultResult InsertKid(InternalKid kid)
         {
-            try { 
-               cd: db.Insert(Convert(kid)); 
-                return DefaultResult.Success; 
+            try
+            {
+            db.Insert(Convert(kid));
+                return DefaultResult.Success;
             }
-            catch 
-            { 
-                return DefaultResult.DatabaseError; 
+            catch
+            {
+                return DefaultResult.DatabaseError;
             }
 
         }
@@ -574,14 +509,14 @@ namespace Database_nsp
                 return DefaultResult.DatabaseError;
             }
         }
-        
+
         public Dictionary<string, int> GetGroups()
         {
             var list = GetKids();
-            Dictionary<string, int> groups = new Dictionary<string, int>();
+            Dictionary<string, int> groups = new();
             foreach (var kid in list)
             {
-                if(!groups.ContainsKey(kid.Group))
+                if (!groups.ContainsKey(kid.Group))
                 {
                     groups.Add(kid.Group, 1);
                 }
@@ -592,7 +527,7 @@ namespace Database_nsp
             }
             return groups;
         }
-        
+
     }
 }
 
