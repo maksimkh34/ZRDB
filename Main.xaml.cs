@@ -49,7 +49,8 @@ namespace ZRDB
 
         private void GroupsButton_C(object sender, EventArgs e)
         {
-
+            Groups form = new Groups();
+            form.Show();
         }
 
         private void PassportButton_C(object sender, EventArgs e)

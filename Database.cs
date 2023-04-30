@@ -130,6 +130,12 @@ namespace Database_nsp
         public string Notes { get; set; }
         public string Group { get; set; }
     }
+
+    class Group
+    {
+        public string name { get; set; }
+    }
+
     public class Database
     {
         const bool isAuthSkipAvalibvale = true;
@@ -545,7 +551,7 @@ namespace Database_nsp
         public DefaultResult InsertKid(InternalKid kid)
         {
             try { 
-                db.Insert(Convert(kid)); 
+               cd: db.Insert(Convert(kid)); 
                 return DefaultResult.Success; 
             }
             catch 
@@ -568,6 +574,25 @@ namespace Database_nsp
                 return DefaultResult.DatabaseError;
             }
         }
+        
+        public Dictionary<string, int> GetGroups()
+        {
+            var list = GetKids();
+            Dictionary<string, int> groups = new Dictionary<string, int>();
+            foreach (var kid in list)
+            {
+                if(!groups.ContainsKey(kid.Group))
+                {
+                    groups.Add(kid.Group, 1);
+                }
+                else
+                {
+                    groups[kid.Group]++;
+                }
+            }
+            return groups;
+        }
+        
     }
 }
 
