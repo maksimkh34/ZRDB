@@ -22,7 +22,7 @@ namespace ZRDB
         {
             try
             {
-                RegistryKey lkey = Registry.LocalMachine;
+                RegistryKey lkey = Registry.CurrentUser;
                 RegistryKey nkey = lkey.OpenSubKey("SOFTWARE", true);
                 RegistryKey pass2 = nkey.OpenSubKey("WOW6432Node");
                 RegistryKey pass = pass2.OpenSubKey("ZRDB");
