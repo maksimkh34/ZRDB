@@ -160,7 +160,7 @@ namespace Database_nsp
 
         static string GetDefaultDBPath()
         {
-            return "D:\\ZRDB\\";
+            return "";
         }
 
         public Database()

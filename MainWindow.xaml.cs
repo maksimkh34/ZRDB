@@ -30,9 +30,18 @@ namespace ZRDB
             switch (res)
             {
                 case LoginResult.Success:
-                    Main form = new Main();
-                    Hide();
-                    form.Show();
+                    try
+                    {
+                        Main form = new Main();
+                        Hide();
+                        form.Show();
+                    }
+                    catch (Exception ex)
+                    {
+                        System.IO.File.Create("log.txt");
+                        System.IO.File.WriteAllText("log.txt", ex.Message);
+                        MessageBoxInterface.ShowError("Произошла неизвестная ошибка. Пожалуйста, отправьте файл log.txt на почту maksimkh34@duck.com с подробным описанием контекста. ");
+                    }
                     break;
                 case LoginResult.InvalidPassword:
                     MessageBoxInterface.ShowError("Указан неверный пароль. ", false);
